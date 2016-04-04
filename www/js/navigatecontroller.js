@@ -34,7 +34,9 @@ NavigateController.prototype = {
             var currentLat = position.coords.latitude;
             var currentLng = position.coords.longitude;
             self.calculateRoute(currentLat, currentLng);
-        }, function(error) { console.log('error: ' + error.message)});
+        }, function (error) {
+            console.log('error: ' + error.message)
+        });
     },
     calculateRoute: function (currentLat, currentLng) {
         var self = this;
@@ -51,4 +53,4 @@ NavigateController.prototype = {
             }
         });
     }
-}
+};

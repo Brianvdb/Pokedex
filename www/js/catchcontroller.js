@@ -28,11 +28,11 @@ CatchController.prototype = {
         for(i = 0; i < this.secretpokemons.length; i++) {
             var pokemon = this.secretpokemons[i];
             if (pokemon.found == 0) {
-                catchlist.append('<li><a href="navigatepokemon.html?lat=' + pokemon.lat + '&lng=' + pokemon.lng + '"><img src="img/secret-pokemon.png"/><h2 data-localized="secret_pokemon"></h2><p data-localized="secret_pokemon_notfound"></p></a></li>');
+                catchlist.append('<li><a data-transition="slideup" href="navigatepokemon.html?lat=' + pokemon.lat + '&lng=' + pokemon.lng + '"><img src="img/secret-pokemon.png"/><h2 data-localized="secret_pokemon"></h2><p data-localized="secret_pokemon_notfound"></p></a></li>');
             } else {
                 var url = this.api.getPokemonUrl(pokemon.pokemon_id);
                 var imageUrl = this.api.getPokemonImageUrl(pokemon.pokemon_id);
-                catchlist.append('<li><a href="pokemonview.html?location=' + encodeURI(pokemon.location) + '&name=' + pokemon.pokemon_name + '&id=' + pokemon.pokemon_id + '&url=' + url + '"><img src="' + imageUrl + '"/><h2>' + pokemon.pokemon_name + '</h2><p>' + pokemon.location + '</p></a></li>');
+                catchlist.append('<li><a data-transition="slideup" href="pokemonview.html?location=' + encodeURI(pokemon.location) + '&name=' + pokemon.pokemon_name + '&id=' + pokemon.pokemon_id + '&url=' + url + '"><img src="' + imageUrl + '"/><h2>' + pokemon.pokemon_name + '</h2><p>' + pokemon.location + '</p></a></li>');
             }
         }
         this.languagecontroller.invalidate();

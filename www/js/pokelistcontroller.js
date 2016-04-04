@@ -27,8 +27,6 @@ PokelistController.prototype = {
                 self.api.getPokemons(self.listOffset, function(data) { self.pokemonsReceived(data) });
             }
         }, this.listOffset);
-
-        //this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
     },
     pokemonsReceived: function(pokemons) {
 
@@ -66,4 +64,4 @@ PokelistController.prototype = {
             this.fetchPokemons();
         }
     }
-}
+};
