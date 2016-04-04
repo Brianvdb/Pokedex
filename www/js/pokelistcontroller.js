@@ -2,9 +2,10 @@
  * Created by Gebruiker on 1-4-2016.
  */
 
-function PokelistController(api, databasecontroller) {
+function PokelistController(api, databasecontroller, languagecontroller) {
     this.api = api;
     this.databasecontroller = databasecontroller;
+    this.languagecontroller = languagecontroller;
 }
 
 PokelistController.prototype = {
@@ -57,7 +58,7 @@ PokelistController.prototype = {
             var self = this;
 
             $.mobile.loading("show", {
-                text: "loading more...",
+                text: this.languagecontroller.getLocalized('loading_more'),
                 textVisible: true,
                 theme: 'b'
             });

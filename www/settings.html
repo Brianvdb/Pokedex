@@ -4,8 +4,21 @@
         <h1 data-localized="settings"></h1>
     </div>
     <div class="ui-content">
-        <ul data-role="listview" id="settings">
-
-        </ul>
+        <form>
+            <fieldset data-role="controlgroup">
+                <legend><b data-localized="language"></b></legend>
+                <input type="radio" name="language" id="choice-english" value="english" checked="checked">
+                <label for="choice-english">English</label>
+                <input type="radio" name="language" value="german" id="choice-german">
+                <label for="choice-german">Deutsch</label>
+                <input type="radio" name="language" value="dutch" id="choice-dutch">
+                <label for="choice-dutch">Nederlands</label>
+            </fieldset>
+        </form>
+        <b>Credits</b>
+        <p data-localized="credits"></p>
+        <p>
+            <a href="#" onclick="window.open('http://pokeapi.co/', '_system');">Poke API</a>
+        </p>
     </div>
 </div>

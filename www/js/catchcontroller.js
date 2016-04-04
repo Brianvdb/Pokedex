@@ -32,7 +32,7 @@ CatchController.prototype = {
             } else {
                 var url = this.api.getPokemonUrl(pokemon.pokemon_id);
                 var imageUrl = this.api.getPokemonImageUrl(pokemon.pokemon_id);
-                catchlist.append('<li><a href="pokemonview.html?name=' + pokemon.pokemon_name + '&id=' + pokemon.pokemon_id + '&url=' + url + '"><img src="' + imageUrl + '"/><h2>' + pokemon.pokemon_name + '</h2><p>' + pokemon.location + '</p></a></li>');
+                catchlist.append('<li><a href="pokemonview.html?location=' + encodeURI(pokemon.location) + '&name=' + pokemon.pokemon_name + '&id=' + pokemon.pokemon_id + '&url=' + url + '"><img src="' + imageUrl + '"/><h2>' + pokemon.pokemon_name + '</h2><p>' + pokemon.location + '</p></a></li>');
             }
         }
         this.languagecontroller.invalidate();

@@ -6,16 +6,26 @@ var app = {
         // init controllers
         this.languagecontroller = new LanguageController();
         this.databasecontroller = new DatabaseController(this.api);
-        this.pokelistcontroller = new PokelistController(this.api, this.databasecontroller);
+        this.pokelistcontroller = new PokelistController(this.api, this.databasecontroller, this.languagecontroller);
         this.pokemoncontroller = new PokemonController(this.api, this.databasecontroller, this.languagecontroller);
         this.catchcontroller = new CatchController(this.api, this.databasecontroller, this.languagecontroller);
         this.navigatecontroller = new NavigateController();
+        this.settingscontroller = new SettingsController(this.languagecontroller);
         this.tabcontroller = new TabController(this.catchcontroller);
 
         // binds events
         this.bindEvents();
 
+        // utilities
         $.urlParam = this.getParameterByName;
+        String.prototype.format = function() {
+            var formatted = this;
+            for (var i = 0; i < arguments.length; i++) {
+                var regexp = new RegExp('\\{'+i+'\\}', 'gi');
+                formatted = formatted.replace(regexp, arguments[i]);
+            }
+            return formatted;
+        };
     },
     // Bind Event Listeners
     //
@@ -39,7 +49,16 @@ var app = {
             var name = $.urlParam(url, 'name');
             var apiUrl = $.urlParam(url, 'url');
             var pokemonid = $.urlParam(url, 'id');
-            this.pokemoncontroller.loadPokemon(name, pokemonid, apiUrl);
+            var location = $.urlParam(url, 'location');
+            this.pokemoncontroller.loadPokemon(name, pokemonid, apiUrl, location);
+        }
+
+        if (id != 'pokemonview') {
+            this.pokemoncontroller.onPageHidden();
+        }
+
+        if (id == 'settingsview') {
+            this.settingscontroller.init();
         }
 
         this.languagecontroller.invalidate();

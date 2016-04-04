@@ -8,9 +8,21 @@ function PokemonController(api, databasecontroller, languagecontroller) {
 }
 
 PokemonController.prototype = {
-    loadPokemon: function(name, id, url) {
+    loadPokemon: function(name, id, url, location) {
         $('#pokemontitle').text(name);
         var self = this;
+        this.location = location;
+        this.pokemonname = name;
+
+        var sharePokemonButton = $('#share-pokemon');
+        if(!location) {
+            sharePokemonButton.hide();
+        } else {
+            sharePokemonButton.show();
+            sharePokemonButton.on('tap', function() {
+                self.onShareButtonClicked();
+            });
+        }
 
         this.databasecontroller.getPokemon(function(pokemon) {
             if(pokemon) {
@@ -30,9 +42,12 @@ PokemonController.prototype = {
             this.showLoader();
         }
     },
+    onPageHidden: function() {
+        this.pageshowed = false;
+    },
     showLoader: function() {
         $.mobile.loading("show", {
-            text: "loading...",
+            text: this.languagecontroller.getLocalized('loading'),
             textVisible: true,
             theme: 'b'
         });
@@ -55,5 +70,9 @@ PokemonController.prototype = {
         details.listview('refresh');
 
         $.mobile.loading("hide");
+    },
+    onShareButtonClicked: function() {
+        var sharemessage = this.languagecontroller.getLocalized('share_message').format(this.pokemonname, this.location);
+        window.plugins.socialsharing.share(sharemessage);
     }
 };
