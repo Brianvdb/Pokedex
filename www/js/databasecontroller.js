@@ -11,7 +11,7 @@ DatabaseController.prototype = {
         var self = this;
         this.db.transaction(function(trans) {
             trans.executeSql("CREATE TABLE IF NOT EXISTS secretpokemon (lat, lng, pokemon_id, pokemon_name, location, found)");
-            trans.executeSql("CREATE TABLE IF NOT EXISTS pokemon (id, name, base_experience, height, is_default, order_nr, weight)");
+            trans.executeSql("CREATE TABLE IF NOT EXISTS pokemon (id INTEGER PRIMARY KEY, name, base_experience, height, is_default, order_nr, weight)");
             self.getSecretPokemons(); // populates data if table is empty
         }, function(err) { self.onDatabaseError(undefined, err) });
     },
@@ -63,6 +63,7 @@ DatabaseController.prototype = {
         var self = this;
         this.db.transaction(function(trans) {
             trans.executeSql('UPDATE secretpokemon SET found=1 WHERE pokemon_id=?', [pokemon.pokemon_id]);
+            trans.executeSql('INSERT OR IGNORE INTO pokemon (id, name) VALUES (?,?)', [pokemon.pokemon_id, pokemon.pokemon_name]);
             self.getSecretPokemons(callback);
         }, function(err) { self.onDatabaseError(callback, err) });
     },
@@ -72,7 +73,7 @@ DatabaseController.prototype = {
         this.db.transaction(function(trans) {
             for(var i = 0; i < pokemons.length; i++) {
                 var pokemon = pokemons[i];
-                trans.executeSql('INSERT INTO pokemon (id, name) VALUES (?,?)', [pokemon.id, pokemon.name]);
+                trans.executeSql('INSERT OR IGNORE INTO pokemon (id, name) VALUES (?,?)', [pokemon.id, pokemon.name]);
             }
         }, function(err) { self.onDatabaseError(undefined, err) });
     },
@@ -80,8 +81,9 @@ DatabaseController.prototype = {
     getPokemons: function(callback, offset) {
         var self = this;
         this.db.transaction(function(trans) {
-            trans.executeSql('SELECT id, name FROM pokemon LIMIT ?,30', [offset], function(trans, results) {
+            trans.executeSql('SELECT id, name FROM pokemon WHERE id > ? AND id <= ?', [offset, offset + 30], function(trans, results) {
                 var length = results.rows.length;
+                console.log('length: ' + length);
                 if(length == 0) {
                     callback(undefined);
                 } else {
@@ -133,7 +135,7 @@ DatabaseController.prototype = {
     },
 
     onDatabaseError: function(callback, err) {
-        if(callback) callback(undefined);
         console.log('database error: ' + err.message);
+        if(callback) callback(undefined);
     }
 };

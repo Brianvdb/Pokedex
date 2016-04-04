@@ -44,6 +44,7 @@ NavigateController.prototype = {
             travelMode: google.maps.TravelMode['WALKING']
         }, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
+                self.marker.setMap(null);
                 self.directionsDisplay.setDirections(response);
             } else {
                 console.log('Directions request failed due to ' + status);
