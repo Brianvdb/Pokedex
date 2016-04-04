@@ -64,7 +64,6 @@ var app = {
         this.languagecontroller.invalidate();
     },
     onPageShow: function(event, ui) {
-        console.log('show..');
         var id = ui.toPage[0].id;
         if(id == 'map-page') {
             var url = ui.toPage.data('url');

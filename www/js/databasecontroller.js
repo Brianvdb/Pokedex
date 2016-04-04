@@ -21,7 +21,6 @@ DatabaseController.prototype = {
         this.db.transaction(function(trans) {
             trans.executeSql('SELECT * FROM secretpokemon ORDER BY found DESC', [], function(trans, results) {
                 var length = results.rows.length;
-                console.log('secret pokemons length: ' + length);
                 if(length == 0) {
                     self.addSecretPokemons(callback);
                 } else {
