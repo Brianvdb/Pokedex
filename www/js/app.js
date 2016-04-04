@@ -45,6 +45,7 @@ var app = {
         this.languagecontroller.invalidate();
     },
     onPageShow: function(event, ui) {
+        console.log('show..');
         var id = ui.toPage[0].id;
         if(id == 'map-page') {
             var url = ui.toPage.data('url');
@@ -52,6 +53,9 @@ var app = {
             var lat = $.urlParam(url, 'lat');
             var lng = $.urlParam(url, 'lng');
             this.navigatecontroller.loadMap(lat, lng);
+        }
+        if(id == 'pokemonview') {
+            this.pokemoncontroller.onPageShowed();
         }
     },
     getParameterByName: function(url, name) {

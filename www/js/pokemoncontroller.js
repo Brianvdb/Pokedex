@@ -16,16 +16,29 @@ PokemonController.prototype = {
             if(pokemon) {
                 self.onPokemonFetched(pokemon);
             } else {
-                $.mobile.loading("show", {
-                    text: "loading...",
-                    textVisible: true,
-                    theme: 'b'
-                });
+                self.updating = true;
+                if (self.pageshowed) {
+                    self.showLoader();
+                }
                 self.api.getPokemon(id, function(pokemon) { self.onPokemonFetched(pokemon) });
             }
         }, id);
     },
+    onPageShowed: function() {
+        this.pageshowed = true;
+        if(this.updating) {
+            this.showLoader();
+        }
+    },
+    showLoader: function() {
+        $.mobile.loading("show", {
+            text: "loading...",
+            textVisible: true,
+            theme: 'b'
+        });
+    },
     onPokemonFetched: function(pokemon) {
+        this.updating = false;
         var imageholder = $('.pokemonimage');
         imageholder.append('<img src="' + this.api.getPokemonImageUrl(pokemon.id) + '" class="centered">');
 
