@@ -1,57 +1,71 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="msapplication-tap-highlight" content="no"/>
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
-    <title>Pokedex</title>
-</head>
-<body>
-<div data-role="page" id="home">
-    <div data-role="tabs">
-        <div data-role="header" data-position="fixed" data-tap-toggle="false">
-            <a href="settings.html" class="ui-btn-right" data-icon="gear" data-localized="settings"></a>
-            <h1 id="header-title">Pokedex</h1>
-            <div data-role="navbar" data-tap-toggle="false">
-                <ul>
-                    <li><a href="#pokemonlist" class="ui-btn-active ui-state-persist" data-localized="tab_pokemons"></a></li>
-                    <li><a href="#tab2" data-localized="tab_catch"></a></li>
-                </ul>
-            </div>
-        </div>
-        <div data-role="tab" class="ui-content" id="pokemonlist">
-            <ul data-role="listview" id="pokelist">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<title>Pokedex</title>
+	</head>
+	<body>
+		<div data-role="page" id="home">
+			<div data-role="tabs" id="tabs">
+				<div data-role="header" data-position="fixed" data-tap-toggle="false">
+					<a href="settings.html" class="ui-btn-right" data-icon="gear" data-localized="settings"></a>
+					<h1 id="header-title">Pokedex</h1>
+					<div data-role="navbar" data-tap-toggle="false">
+						<ul>
+							<li><a href="#pokemonlist"
+							       class="ui-btn-active ui-state-persist"
+							       data-localized="tab_pokemons"></a></li>
+							<li><a href="#tab2" data-localized="tab_catch"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div data-role="tab" class="ui-content" id="pokemonlist">
+					<ul data-role="listview" id="pokelist">
 
-            </ul>
-        </div>
-        <div data-role="tab" class="ui-content" id="tab2">
-            <p style="padding:0;display:block;" class="row center-text" id="location"></p>
-            <ul data-role="listview" id="catchlist">
+					</ul>
+				</div>
+				<div data-role="tab" class="ui-content" id="tab2">
+					<p style="padding:0;display:block;" class="row center-text" id="location"></p>
+					<ul data-role="listview" id="catchlist">
 
-            </ul>
-        </div>
-    </div>
-</div>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/api.js"></script>
-<script type="text/javascript" src="js/pokelistcontroller.js"></script>
-<script type="text/javascript" src="js/pokemoncontroller.js"></script>
-<script type="text/javascript" src="js/tabcontroller.js"></script>
-<script type="text/javascript" src="js/catchcontroller.js"></script>
-<script type="text/javascript" src="js/databasecontroller.js"></script>
-<script type="text/javascript" src="js/navigatecontroller.js"></script>
-<script type="text/javascript" src="js/languagecontroller.js"></script>
-<script type="text/javascript" src="js/settingscontroller.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUPMulDSxD5nNSr8VG5LNsLI6hzQ-5wLU&sensor=false"></script>
-<script type="text/javascript">
-    app.initialize();
-</script>
-</body>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+		<script type="text/javascript" src="js/api.js"></script>
+		<script type="text/javascript" src="js/pokelistcontroller.js"></script>
+		<script type="text/javascript" src="js/pokemoncontroller.js"></script>
+		<script type="text/javascript" src="js/tabcontroller.js"></script>
+		<script type="text/javascript" src="js/catchcontroller.js"></script>
+		<script type="text/javascript" src="js/databasecontroller.js"></script>
+		<script type="text/javascript" src="js/navigatecontroller.js"></script>
+		<script type="text/javascript" src="js/languagecontroller.js"></script>
+		<script type="text/javascript" src="js/settingscontroller.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+		<script>
+			$(document).on('tabsbeforeactivate', '#tabs', function (event, ui) {
+				var reverse = ui.newPanel.index() < ui.oldPanel.index() ? ' reverse' : '',
+						classes = 'in slide' + reverse;
+				$(ui.newPanel).addClass(classes).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+					$(this).removeClass(classes);
+				});
+			});
+		</script>
+
+
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUPMulDSxD5nNSr8VG5LNsLI6hzQ-5wLU&sensor=false"></script>
+		<script type="text/javascript">
+			app.initialize();
+		</script>
+	</body>
 </html>
