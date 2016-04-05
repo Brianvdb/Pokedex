@@ -43,7 +43,6 @@ DatabaseController.prototype = {
                 {lat: 51.678004, lng: 5.337752, pokemon_id: 45, pokemon_name: "vileplume", location: "Golf Parc Pettelaar"},
                 {lat: 51.684337, lng: 5.295502, pokemon_id: 98, pokemon_name: "krabby", location: "SOS Rommelmarkt"},
                 {lat: 51.688415, lng: 5.307743, pokemon_id: 75, pokemon_name: "graveler", location: "Cafe de Smidse"},
-                {lat: 51.803376, lng: 5.725571, pokemon_id: 76, pokemon_name: "golem", location: "test"},
                 {lat: 51.685956, lng: 5.304016, pokemon_id: 55, pokemon_name: "golduck", location: "Stedelijk Museum 's-Hertogenbosch"}
             ];
 
